@@ -70,6 +70,9 @@ spec:
         image: {{ .Values.images.tags.coredns | quote }}
         imagePullPolicy: {{ .Values.images.pull_policy | quote }}
 {{ tuple $envAll $envAll.Values.pod.resources.coredns | include "helm-toolkit.snippets.kubernetes_resources" | indent 8 }}
+        securityContext:
+          runAsUser: 65534
+          privileged: true
         args: [ "-conf", "/etc/coredns/Corefile" ]
         volumeMounts:
         - name: config-volume
@@ -77,10 +80,10 @@ spec:
         - name: scripts
           mountPath: /tmp/bin
         ports:
-        - containerPort: 53
+        - containerPort: 1043
           name: dns
           protocol: UDP
-        - containerPort: 53
+        - containerPort: 1043
           name: dns-tcp
           protocol: TCP
         readinessProbe:
