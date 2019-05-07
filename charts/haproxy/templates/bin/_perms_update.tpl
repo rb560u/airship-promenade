@@ -1,5 +1,6 @@
+#!/bin/sh
 {{/*
-Copyright 2018 AT&T Intellectual Property.  All other rights reserved.
+Copyright 2019 AT&T Intellectual Property.  All other rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,15 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */}}
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: haproxy-bin
-data:
-  anchor.sh: |
-{{ tuple "bin/_anchor.tpl" . | include "helm-toolkit.utils.template" | indent 4 }}
-  pre_stop.sh: |
-{{ tuple "bin/_pre_stop.tpl" . | include "helm-toolkit.utils.template" | indent 4 }}
-  perms_update.sh: |
-{{ tuple "bin/_perms_update.tpl" . | include "helm-toolkit.utils.template" | indent 4 }}
+
+{{- $envAll := . }}
+
+set -x
+
+chown -R 65534:65534 /host/etc
+chmod -R 755 /host/etc

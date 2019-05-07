@@ -93,5 +93,4 @@ spec:
     - name: etc
       hostPath:
         path: {{ .Values.conf.haproxy.host_config_dir }}
-  securityContext:
-    readOnlyRootFilesystem: true
+{{ dict "envAll" $envAll "application" "haproxy" | include "helm-toolkit.snippets.kubernetes_pod_security_context" | indent 2 }}

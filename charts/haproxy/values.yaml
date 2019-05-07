@@ -72,6 +72,14 @@ endpoints:
     port: 6553
 
 pod:
+  security_context:
+    haproxy:
+      pod:
+        readOnlyRootFilesystem: true
+        runAsUser: 65534
+      container:
+        haproxy-perms:
+          runAsUser: 0
   lifecycle:
     upgrades:
       daemonsets:
