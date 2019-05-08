@@ -95,3 +95,4 @@ spec:
         path: {{ .Values.conf.haproxy.host_config_dir }}
   securityContext:
     readOnlyRootFilesystem: true
+    runAsUser: 13
