@@ -59,6 +59,8 @@ spec:
         - name: anchor
           image: {{ .Values.images.tags.anchor }}
           imagePullPolicy: {{ .Values.images.pull_policy }}
+          securityContext:
+            runAsUser: 65534
 {{ tuple $envAll $envAll.Values.pod.resources.anchor_pod | include "helm-toolkit.snippets.kubernetes_resources" | indent 10 }}
           env:
           - name: MANIFEST_PATH
